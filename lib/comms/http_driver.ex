@@ -74,6 +74,11 @@ defmodule Onfido.Comms.HttpDriver do
 
   defp create_response({:error, _}, _), do: {:error, "There was an issue decoding the body"}
 
-  defp api_token, do: Application.fetch_env!(:onfido, :api_token)
-  defp api_base, do: Application.fetch_env!(:onfido, :api_base)
+  defp api_token do
+    with {:system, env} <- Application.fetch_env!(:onfido, :api_token), do: System.get_env(env)
+  end
+
+  defp api_base do
+    with {:system, env} <- Application.fetch_env!(:onfido, :api_base), do: System.get_env(env)
+  end
 end
